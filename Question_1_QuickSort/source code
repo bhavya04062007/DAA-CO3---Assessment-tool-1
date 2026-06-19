@@ -1,1 +1,58 @@
 
+comparisons = 0
+swaps = 0
+
+def partition(arr, low, high):
+    global comparisons, swaps
+
+    pivot = arr[high]
+    i = low - 1
+
+    for j in range(low, high):
+        comparisons += 1
+
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+            swaps += 1
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    swaps += 1
+
+    return i + 1
+
+def quicksort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+
+        quicksort(arr, low, pi - 1)
+        quicksort(arr, pi + 1, high)
+
+def analyze(data):
+    global comparisons, swaps
+
+    comparisons = 0
+    swaps = 0
+
+    arr = data.copy()
+
+    quicksort(arr, 0, len(arr) - 1)
+
+    print("Original Array:", data)
+    print("Sorted Array:", arr)
+    print("Comparisons:", comparisons)
+    print("Swaps:", swaps)
+    print()
+
+sorted_arr = [1,2,3,4,5,6,7,8]
+reverse_arr = [8,7,6,5,4,3,2,1]
+random_arr = [5,1,8,3,7,2,6,4]
+
+print("---- Sorted Array ----")
+analyze(sorted_arr)
+
+print("---- Reverse Sorted Array ----")
+analyze(reverse_arr)
+
+print("---- Random Array ----")
+analyze(random_arr)
